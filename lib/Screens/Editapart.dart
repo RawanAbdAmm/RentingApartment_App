@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:renting/Model/apartments_model.dart';
+import 'package:renting/cubit/readallapartments/read_allapart_cubit.dart';
+import 'package:renting/widgets/custom_textfield.dart';
 
-class EditApartmentScreen extends StatelessWidget {
+class EditApartmentScreen extends StatefulWidget {
   const EditApartmentScreen({
     Key? key,
     required this.apartment,
   }) : super(key: key);
 
   final Apartments apartment;
+
+  @override
+  State<EditApartmentScreen> createState() => _EditApartmentScreenState();
+}
+
+class _EditApartmentScreenState extends State<EditApartmentScreen> {
+  String? address, apartNum, amout;
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +32,23 @@ class EditApartmentScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  // controller: _nameController,
-                  decoration:  InputDecoration(
-                    label: Text('Address'),
-                  ),
-                ),
+                padding:  EdgeInsets.all(8.0),
+                child:CustomTextField(text: 'Address',
+                onChanged: (data){
+                  address=data;
+
+                },)
               ),
               const SizedBox(
                 height: 8,
               ),
                Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  // controller: _monthsController,
-                  decoration: const InputDecoration(
-                    label: Text('Appartment Number'),
-                  ),
-                ),
+                child: CustomTextField(text: 'Apartment Number',
+                onChanged: (data){
+                  apartNum=data;
+
+                },)
               ),
               const SizedBox(height: 8),
               Padding(
@@ -60,7 +68,12 @@ class EditApartmentScreen extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 171, 33, 23)),
-                  onPressed: (){},
+                  onPressed: (){
+                    widget.apartment.save();
+                     BlocProvider.of<ReadAllapartCubit>(context).readAllApartments();
+              Navigator.pop(context);
+                    
+                  },
                   child: const Text("Save"),
                 ),
                 TextButton(

@@ -4,7 +4,7 @@ import 'package:renting/Screens/apartdetal.dart';
 import 'package:renting/widgets/Apartmenttrait.dart';
 
 class ApartmentTrait extends StatelessWidget {
-  const ApartmentTrait(this.apartments, {super.key});
+  const ApartmentTrait({super.key, required this.apartments});
   final Apartments apartments;
 
   @override
@@ -15,13 +15,17 @@ class ApartmentTrait extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: (){ Navigator.of(context).push(MaterialPageRoute(
-        builder: (ctx) => Appartdetail(
-              apartment: apartments,
-            )));},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (ctx) => Appartdetail(
+                    apartment: apartments,
+                  )));
+        },
         child: Apartmenttrait(
-          address: apartments.adress!,
-          amount: apartments.amount!, rented: apartments.rented.toString(),
+          address: apartments.address,
+          amount: apartments.amount,
+          
+          rented: apartments.rented.toString(),
         ),
       ),
     );

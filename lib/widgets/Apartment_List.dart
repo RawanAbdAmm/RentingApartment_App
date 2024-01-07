@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:renting/Model/apartments_model.dart';
+import 'package:renting/cubit/readallapartments/read_allapart_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:renting/widgets/Apartment_trait.dart';
 
-class Apartment_List extends StatelessWidget {
-  final List<Apartments> apatment;
-  final void Function(Apartments apatment)? onRemoveApartment;
+class ApartmentList extends StatefulWidget {
+  const ApartmentList({
+    super.key,
+  });
 
-  const Apartment_List(
-      {super.key, required this.apatment, this.onRemoveApartment});
+  @override
+  State<ApartmentList> createState() => _ApartmentListState();
+}
+
+class _ApartmentListState extends State<ApartmentList> {
+  @override
+  void initState() {
+    BlocProvider.of<ReadAllapartCubit>(context).readAllApartments();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      
-      itemCount: apatment.length,
-      itemBuilder: (ctx, index) => Dismissible(
-        key: ValueKey(apatment[index]),
-        onDismissed: (direction) {
-          onRemoveApartment!(apatment[index]);
-        },
-        child: ApartmentTrait(apatment[index]),
-      ),
+    return BlocBuilder<ReadAllapartCubit, ReadAllapartState>(
+      builder: (context, state) {
+        List<Apartments> apartment =
+            BlocProvider.of<ReadAllapartCubit>(context).apartment!;
+        return ListView.builder(
+          
+            itemCount: apartment.length,
+            itemBuilder: (ctx, index) {
+              return ApartmentTrait(
+                apartments: apartment[index],
+              );
+            });
+      },
     );
   }
 }

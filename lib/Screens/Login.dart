@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:renting/Screens/Userpage.dart';
 
 import 'Adminpage.dart';
 
@@ -140,9 +139,9 @@ class _Login extends State<Login> {
                   if (usernamecotro.text.isNotEmpty &&
                       passwordcotro.text.isNotEmpty &&
                       usernamecotro.text != 'admin'&& usernamecotro.text == 'user'&&passwordcotro.text=='user') {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx) =>const Userpage()),
-                    );
+                    // Navigator.of(context).pushReplacement(
+                    //   // MaterialPageRoute(builder: (ctx) =>const Userpage()),
+                    // );
                   } else {
                     if (usernamecotro.text.isEmpty ||
                         passwordcotro.text.isEmpty&& usernamecotro.text != 'admin'&& usernamecotro.text != 'user') {
