@@ -17,8 +17,9 @@ class EditApartmentScreen extends StatefulWidget {
 }
 
 class _EditApartmentScreenState extends State<EditApartmentScreen> {
-  String? address, apartNum, amout;
+  String? address, apartNum;
 
+double? amount;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,60 +33,65 @@ class _EditApartmentScreenState extends State<EditApartmentScreen> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding:  EdgeInsets.all(8.0),
-                child:CustomTextField(text: 'Address',
-                onChanged: (data){
-                  address=data;
-
-                },)
-              ),
+                  padding:const EdgeInsets.all(8.0),
+                  child: CustomTextField(
+                    text: 'Address',
+                    onChanged: (data) {
+                      address = data;
+                    },
+                  )),
               const SizedBox(
                 height: 8,
               ),
-               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomTextField(text: 'Apartment Number',
-                onChanged: (data){
-                  apartNum=data;
-
-                },)
-              ),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomTextField(
+                    text: 'Apartment Number',
+                    onChanged: (data) {
+                      apartNum = data;
+                    },
+                  )),
               const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  // controller: _paidController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    prefixText: '\$  ',
-                    label: Text('Amount'),
-                  ),
-                ),
+                child: CustomTextField(
+                    text: 'Amount',
+                    onChanged: (data) {
+                      amount = double.parse(data);
+                    },
+                  )
               ),
-               Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 171, 33, 23)),
-                  onPressed: (){
-                    widget.apartment.save();
-                     BlocProvider.of<ReadAllapartCubit>(context).readAllApartments();
-              Navigator.pop(context);
-                    
-                  },
-                  child: const Text("Save"),
-                ),
-                TextButton(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 171, 33, 23)),
                     onPressed: () {
+                      widget.apartment.address =
+                          address ?? widget.apartment.address;
+                      widget.apartment.apartmentnumber =
+                          apartNum ?? widget.apartment.apartmentnumber;
+                            widget.apartment.amount = amount!=null ?amount! : widget.apartment.amount;
+                      widget.apartment.save();
+                      BlocProvider.of<ReadAllapartCubit>(context)
+                          .readAllApartments();
                       Navigator.pop(context);
                     },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Color.fromARGB(255, 171, 33, 23)),
-                    )),
-              ],
-            ),
+                    child: const Text("Save"),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Cancel',
+                        style:
+                            TextStyle(color: Color.fromARGB(255, 171, 33, 23)),
+                      )),
+                ],
+              ),
             ]),
       ),
     );

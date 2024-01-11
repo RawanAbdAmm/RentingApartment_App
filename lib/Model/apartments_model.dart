@@ -4,21 +4,21 @@ part 'apartments_model.g.dart';
 @HiveType(typeId: 0)
 class Apartments extends HiveObject {
   @HiveField(0)
-  final double amount;
+   double amount;
   @HiveField(1)
-  final String address;
+   String address;
   @HiveField(2)
-  final String apartmentnumber;
+   String apartmentnumber;
   @HiveField(3)
-  final bool rented;
+   bool rented;
   @HiveField(4)
-  final String? name;
+   String? name;
   @HiveField(5)
-  final double months;
+   double months;
   @HiveField(6)
-  final double? paid;
+   double? paid;
   @HiveField(7)
-  final double? restofpayment;
+   double? restofpayment;
 
   Apartments({
     required this.address,
